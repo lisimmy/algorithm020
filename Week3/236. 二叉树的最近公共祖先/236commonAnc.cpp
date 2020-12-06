@@ -9,10 +9,10 @@ public:
         // 下探递归调用
         TreeNode * parentleft = dfsTraverse(root->left, p, q);
         TreeNode * parentright = dfsTraverse(root->right, p, q);
-        if( parentleft && parentleft)
+        if( parentleft && parentright)
             return root;
         else
-            return parentleft ? parentleft : parentleft;
+            return parentleft ? parentleft : parentright;
     }
     TreeNode * lowestCommonAncestor(TreeNode * root, TreeNode * p, TreeNode * q)
     {
