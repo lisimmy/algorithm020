@@ -1,0 +1,30 @@
+主要练习基本功， 逻辑思维能力
+class Solution {
+public:
+    int myAtoi(string s) {
+        int n = s.length();
+        int k = 0;
+        int sign = 1;
+        // 处理空格
+        while(k < n && s[k] == ' ')
+            k++;
+
+        // 处理正负号
+        if(s[k] == '-' || s[k] == '+')
+            sign = s[k++] == '+' ? 1 : -1;
+
+        // 处理数字，结尾有字母则舍弃
+        long sum = 0;
+        while(k < n) {
+            if(s[k] > '9' || s[k] < '0')
+                break;
+            sum = sum * 10 + s[k++] - '0';
+            // 处理最值
+            if(sign * sum > INT_MAX)
+                return INT_MAX;
+            if(sign * sum < INT_MIN)
+                return INT_MIN;
+        }
+        return sign * sum;
+    }
+};

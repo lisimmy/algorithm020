@@ -1,0 +1,42 @@
+class Solution {
+public:
+    string longestPalindrome(string s) {
+        // dp dp[i][j]  i 左边界、 j右边界
+        int n = s.length();
+        vector<vector<int>> dp(n, vector<int>(n));
+
+        int maxLen = 1;
+        int strBegin = 0;
+        // 左边界从0开始， 右边界从1开始  且枚举的时候 j >= i
+        // 右边界(j)先固定，枚举左(i)
+        for(int j  = 1; j < n; ++j) {
+            for(int i = 0; i < j; ++i) {
+                // 左右边界上的字符不相等，那么肯定是不是回文
+                if(s[i] != s[j])
+                    dp[i][j] = 0;
+                else {
+                    // 如果左右边界上的字符相等，并且 子串长度 为 0 1 2 3 那么子串肯定是回文
+                    if(j - i + 1 < 4)
+                        dp[i][j] = 1;
+                    else // 如果子串长度更长 4/5/6/7等，那么就看dp方程的上一个状态，也就是看左边界后移一位，右边界前移一位的状态
+                        dp[i][j] = dp[i + 1][j - 1];
+                }
+                // 更新最长串的状态
+                if(dp[i][j] && maxLen < j - i + 1) {
+                    maxLen = j - i + 1;
+                    strBegin = i; // 记录最长子串的起始位置
+                }
+            }
+        }
+        //cout << strBegin << " " << maxLen << endl;
+        string res(s.begin() + strBegin, s.begin() + strBegin + maxLen);
+        return res;
+    }
+};
+/*
+"babad"
+"cbbd"
+"a"
+""
+"abababababa"
+*/

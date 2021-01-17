@@ -1,0 +1,24 @@
+class Solution {
+public:
+    string reverseStr(string s, int k) {
+        int n = s.length();
+        int countK = 0;
+        for(int i = 0; i < n; ++i) {
+            // 判断是否隔了2k个元素
+            if(i == countK * 2 * k) {
+                countK++;
+                // 需要交换的子数组的最后一个索引为p
+                int p = i + k - 1;
+                // 如果p越界，那么p赋值为数组的最大索引
+                if(p >= n) p = n - 1;
+                // 交换子数组
+                for(int j = i; j < p; ++j, --p) {
+                    s[j] = s[j] ^ s[p];
+                    s[p] = s[j] ^ s[p];
+                    s[j] = s[j] ^ s[p];
+                }
+            }
+        }
+        return s;
+    }
+};
